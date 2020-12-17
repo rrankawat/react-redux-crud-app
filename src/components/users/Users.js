@@ -1,26 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+import User from './User';
 
 const Users = (props) => {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      firstName: 'Rakesh',
-      lastName: 'Rankawat',
-      age: 27,
-    },
-    {
-      id: 2,
-      firstName: 'Meenu',
-      lastName: 'Rankawat',
-      age: 27,
-    },
-    {
-      id: 3,
-      firstName: 'John',
-      lastName: 'Doe',
-      age: 35,
-    },
-  ]);
+  const [users, setUsers] = useState(null);
+
+  const getUsers = async () => {
+    const res = await axios.get(`http://localhost:5000/users`);
+    setUsers(res.data);
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <div>
@@ -39,21 +32,11 @@ const Users = (props) => {
 
         <tbody>
           {users !== null ? (
-            users.map((user, index) => (
-              <tr key={user.id}>
-                <td>{index + 1}</td>
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
-                <td>{user.age}</td>
-                <td>
-                  <a href="/#" className="btn btn-danger btn-sm">
-                    Delete
-                  </a>
-                </td>
-              </tr>
-            ))
+            users.map((user) => <User key={user.id} user={user} />)
           ) : (
-            <p>No data found</p>
+            <tr>
+              <td colSpan="5">No data found</td>
+            </tr>
           )}
         </tbody>
       </table>
