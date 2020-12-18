@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import User from './User';
 
-const Users = (props) => {
+const Users = () => {
   const [users, setUsers] = useState(null);
 
   const getUsers = async () => {
@@ -17,7 +17,14 @@ const Users = (props) => {
 
   return (
     <div>
-      <h1>{props.title}</h1>
+      <div className="d-flex justify-content-between">
+        <h1>All Users</h1>
+        <div className="mt-2">
+          <a href="/add" className="btn btn-primary">
+            Add User
+          </a>
+        </div>
+      </div>
 
       <table className="table table-striped mt-3">
         <thead>
