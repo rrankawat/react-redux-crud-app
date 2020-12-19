@@ -16,7 +16,10 @@ const User = (props) => {
       <td>
         <button className="btn btn-danger btn-sm" onClick={onClick}>
           Delete
-        </button>
+        </button>{' '}
+        <a href={`/edit/${id}`} className="btn btn-secondary btn-sm">
+          Edit
+        </a>
       </td>
     </tr>
   );
