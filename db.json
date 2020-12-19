@@ -1,10 +1,28 @@
 {
   "users": [
     {
-      "id": 1,
-      "firstName": "Rakesh",
-      "lastName": "Rankawat",
-      "age": 27
+      "firstName": "John",
+      "lastName": "Doe",
+      "age": "34",
+      "id": 1
+    },
+    {
+      "firstName": "Erika",
+      "lastName": "Albright",
+      "age": "27",
+      "id": 2
+    },
+    {
+      "firstName": "Mark",
+      "lastName": "Zuck",
+      "age": "32",
+      "id": 3
+    },
+    {
+      "firstName": "Frad",
+      "lastName": "Jr",
+      "age": "45",
+      "id": 4
     }
   ]
 }

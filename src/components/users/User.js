@@ -3,6 +3,10 @@ import React from 'react';
 const User = (props) => {
   const { id, firstName, lastName, age } = props.user;
 
+  const onClick = () => {
+    props.onDelete(id);
+  };
+
   return (
     <tr>
       <td>{id}</td>
@@ -10,9 +14,9 @@ const User = (props) => {
       <td>{lastName}</td>
       <td>{age}</td>
       <td>
-        <a href="/#" className="btn btn-danger btn-sm">
+        <button className="btn btn-danger btn-sm" onClick={onClick}>
           Delete
-        </a>
+        </button>
       </td>
     </tr>
   );

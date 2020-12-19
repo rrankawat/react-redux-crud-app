@@ -15,6 +15,15 @@ const Users = () => {
     getUsers();
   }, []);
 
+  const onDelete = async (id) => {
+    let copyUsers = users;
+    copyUsers = copyUsers.filter((user) => user.id !== id);
+    setUsers(copyUsers);
+
+    // delete from db
+    await axios.delete(`http://localhost:5000/users/${id}`);
+  };
+
   return (
     <div>
       <div className="d-flex justify-content-between">
@@ -39,7 +48,9 @@ const Users = () => {
 
         <tbody>
           {users !== null ? (
-            users.map((user) => <User key={user.id} user={user} />)
+            users.map((user) => (
+              <User key={user.id} user={user} onDelete={onDelete} />
+            ))
           ) : (
             <tr>
               <td colSpan="5">No data found</td>

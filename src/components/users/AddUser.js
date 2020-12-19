@@ -1,15 +1,33 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const AddUser = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setlastName] = useState('');
   const [age, setAge] = useState('');
 
-  const onSubmit = (e) => {
+  const history = useHistory();
+
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     if (firstName !== '' && lastName !== '' && age !== '') {
-      console.log('submited');
+      const newUser = {
+        firstName,
+        lastName,
+        age,
+      };
+
+      await axios.post(`http://localhost:5000/users`, newUser);
+
+      // reset state
+      setFirstName('');
+      setlastName('');
+      setAge('');
+
+      // redirect
+      history.push('/');
     }
   };
 
