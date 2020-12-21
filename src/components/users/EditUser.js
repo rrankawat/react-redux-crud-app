@@ -6,6 +6,7 @@ const EditUser = (props) => {
   const [lastName, setLastName] = useState('');
   const [age, setAge] = useState('');
 
+  // Refs provide a way to access DOM nodes or React elements created in the render method.
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const ageRef = useRef();
