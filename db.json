@@ -29,6 +29,12 @@
       "lastName": "Man",
       "age": "22",
       "id": 5
+    },
+    {
+      "firstName": "Meenu",
+      "lastName": "Rankawat",
+      "age": "27",
+      "id": 6
     }
   ]
 }

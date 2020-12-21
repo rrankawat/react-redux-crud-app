@@ -1,31 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const EditUser = (props) => {
   const [firstName, setFirstName] = useState('');
-  const [lastName, setlastName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [age, setAge] = useState('');
+
+  const firstNameRef = useRef();
+  const lastNameRef = useRef();
+  const ageRef = useRef();
+
+  const getUser = async () => {
+    const res = await axios.get(
+      `http://localhost:5000/users/${props.match.params.id}`
+    );
+
+    setFirstName(res.data.firstName);
+    setLastName(res.data.lastName);
+    setAge(res.data.age);
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (firstName !== '' && lastName !== '' && age !== '') {
-      const newUser = {
-        firstName,
-        lastName,
-        age,
-      };
+    const updatedUser = {
+      firstName: firstNameRef.current.value,
+      lastName: lastNameRef.current.value,
+      age: ageRef.current.value,
+    };
 
-      await axios.post(`http://localhost:5000/users`, newUser);
+    await axios.put(
+      `http://localhost:5000/users/${props.match.params.id}`,
+      updatedUser
+    );
 
-      // reset state
-      setFirstName('');
-      setlastName('');
-      setAge('');
-
-      // redirect
-      props.history.push('/');
-    }
+    // redirect
+    props.history.push('/');
   };
 
   return (
@@ -40,8 +54,8 @@ const EditUser = (props) => {
             name="firstName"
             className="form-control"
             placeholder="Enter First Name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            defaultValue={firstName}
+            ref={firstNameRef}
           />
         </div>
         <div className="form-group">
@@ -51,8 +65,8 @@ const EditUser = (props) => {
             name="lastName"
             className="form-control"
             placeholder="Enter Last Name"
-            value={lastName}
-            onChange={(e) => setlastName(e.target.value)}
+            defaultValue={lastName}
+            ref={lastNameRef}
           />
         </div>
         <div className="form-group">
@@ -62,8 +76,8 @@ const EditUser = (props) => {
             name="age"
             className="form-control"
             placeholder="Enter Age"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
+            defaultValue={age}
+            ref={ageRef}
           />
         </div>
         <input type="submit" className="btn btn-success mt-2" value="Update" />
