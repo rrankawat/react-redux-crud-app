@@ -1,28 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { getUsers } from '../../actions/userAction';
 
 import User from './User';
 
-const Users = () => {
-  const [users, setUsers] = useState(null);
-
-  const getUsers = async () => {
-    const res = await axios.get(`http://localhost:5000/users`);
-    setUsers(res.data);
-  };
-
+const Users = ({ users, getUsers }) => {
   useEffect(() => {
     getUsers();
   }, []);
-
-  const onDelete = async (id) => {
-    let copyUsers = users;
-    copyUsers = copyUsers.filter((user) => user.id !== id);
-    setUsers(copyUsers);
-
-    // delete from db
-    await axios.delete(`http://localhost:5000/users/${id}`);
-  };
 
   return (
     <div>
@@ -48,9 +34,7 @@ const Users = () => {
 
         <tbody>
           {users !== null ? (
-            users.map((user) => (
-              <User key={user.id} user={user} onDelete={onDelete} />
-            ))
+            users.map((user) => <User key={user.id} user={user} />)
           ) : (
             <tr>
               <td colSpan="5">No data found</td>
@@ -62,4 +46,8 @@ const Users = () => {
   );
 };
 
-export default Users;
+const mapStateToProps = (state) => ({
+  users: state.user.users,
+});
+
+export default connect(mapStateToProps, { getUsers })(Users);
